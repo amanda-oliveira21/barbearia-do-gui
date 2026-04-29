@@ -29,7 +29,7 @@
         
         /* NOVO: BOTÃO INSTAGRAM (Fica em cima do whats) */
         .insta-float {
-            bottom: 100px; /* Posicionado acima do WhatsApp */
+            bottom: 100px;
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             box-shadow: 0 10px 25px rgba(220, 39, 67, 0.4);
         }
@@ -49,6 +49,50 @@
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80');
             background-attachment: fixed; background-size: cover; background-position: center;
         }
+
+        /* Menu Mobile */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(15px);
+            flex-direction: column;
+            width: 100%;
+            gap: 0;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+        }
+
+        /* Responsividade avançada */
+        @media (max-width: 640px) {
+            .hero { background-attachment: scroll; }
+            nav { padding: 0.75rem 1rem; }
+            .text-9xl { font-size: 2.5rem; }
+            .text-7xl { font-size: 2.5rem; }
+            .text-5xl { font-size: 2rem; }
+            .gallery-item { height: 300px; }
+            .social-float { width: 55px; height: 55px; font-size: 28px; }
+            .insta-float { bottom: 90px; }
+            .whats-float { bottom: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -65,6 +109,8 @@
             <img src="https://i.postimg.cc/nz8v9bDz/logo-Barbeariadogui.jpg" alt="Logo" class="w-12 h-12 object-contain">
             <div class="text-3xl font-bebas tracking-tighter gold-text">Barbearia do <span class="text-white">Gui</span></div>
         </div>
+        
+        <!-- Menu Desktop -->
         <div class="hidden md:flex space-x-8 font-bold text-sm tracking-widest">
             <a href="#home" class="hover:text-amber-500 transition">INÍCIO</a>
             <a href="#galeria" class="hover:text-amber-500 transition">CORTES</a>
@@ -72,9 +118,23 @@
             <a href="#agendamento" class="hover:text-amber-500 transition">AGENDAMENTO</a>
             <a href="#contato" class="hover:text-amber-500 transition">INFORMAÇÕES</a>
         </div>
+
+        <!-- Menu Mobile Hamburger -->
+        <button onclick="toggleMobileMenu()" class="md:hidden text-2xl gold-text">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Menu Mobile Dropdown -->
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="#home" onclick="toggleMobileMenu()">INÍCIO</a>
+            <a href="#galeria" onclick="toggleMobileMenu()">CORTES</a>
+            <a href="#feedbacks" onclick="toggleMobileMenu()">FEEDBACKS</a>
+            <a href="#agendamento" onclick="toggleMobileMenu()">AGENDAMENTO</a>
+            <a href="#contato" onclick="toggleMobileMenu()">INFORMAÇÕES</a>
+        </div>
     </nav>
 
-    <section id="home" class="hero h-screen flex flex-col justify-center items-center text-center px-6">
+    <section id="home" class="hero h-screen flex flex-col justify-center items-center text-center px-6 pt-24 md:pt-0">
         <h1 class="text-7xl md:text-9xl font-bebas leading-none" data-aos="zoom-in" data-aos-duration="1500">
             MAIS QUE UM <span class="gold-text">CORTE</span>,<br>UM ESTILO DE VIDA
         </h1>
@@ -175,6 +235,11 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: false });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
 
         function enviarWhats() {
             const nome = document.getElementById('nome_user').value;
